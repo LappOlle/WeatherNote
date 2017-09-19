@@ -13,7 +13,7 @@ namespace Weather_Note.Controllers
 {
     public class NotesController : Controller
     {
-        private NoteContext db = new NoteContext();
+        private NoteContext db = new NoteContext();//hello
 
         // GET: Notes
         public ActionResult Index()
