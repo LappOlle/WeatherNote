@@ -18,7 +18,7 @@ namespace Weather_Note.Controllers
         // GET: Notes
         public ActionResult Index()
         {
-            return View(db.Notes.ToList());
+            return View(db.Notes.ToList());//test 2
         }
 
         // GET: Notes/Details/5
