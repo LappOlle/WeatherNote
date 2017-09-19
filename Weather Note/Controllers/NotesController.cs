@@ -16,9 +16,9 @@ namespace Weather_Note.Controllers
         private NoteContext db = new NoteContext();//hello
 
         // GET: Notes
-        public ActionResult Index()
+        public ActionResult Index()//test 3
         {
-            return View(db.Notes.ToList());
+            return View(db.Notes.ToList());//test 2
         }
 
         // GET: Notes/Details/5
