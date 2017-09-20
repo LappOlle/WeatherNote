@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using Weather_Note.Models.Interface;
 
 namespace Weather_Note.Models.POCO
@@ -16,5 +17,7 @@ namespace Weather_Note.Models.POCO
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}")]
         public DateTime Date { get; set; }
         public string Message { get; set; }
+        [NotMapped]
+        public string MaxTemp { get; set; }
     }
 }
