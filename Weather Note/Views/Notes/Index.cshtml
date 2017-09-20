@@ -10,16 +10,23 @@
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
+@using (Html.BeginForm())
+{
+    <p>
+        Find By Message: @Html.TextBox("SearchTerm")
+        <input type="submit" value="Search" />
+    </p>
+}
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Date)
+            @Html.ActionLink("Date","Index",new {sortOrder = ViewBag.SortDate })
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Message)
+            @Html.ActionLink("Message", "Index", new { sortOrder = ViewBag.SortMessage })
         </th>
         <th>
-            @Html.DisplayName("Max Temperature")
+            @Html.DisplayName("Max Temp")
         </th>
         <th></th>
     </tr>

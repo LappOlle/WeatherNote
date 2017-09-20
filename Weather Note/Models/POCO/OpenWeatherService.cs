@@ -13,7 +13,6 @@ namespace Weather_Note.Models.POCO
     public class OpenWeatherService
     {
         private OpenWeatherContainer.RootObject root;
-        
         private int CityID;
         private string ApiKey;
         private string openWeatherRequestUrl;
@@ -25,7 +24,7 @@ namespace Weather_Note.Models.POCO
             openWeatherRequestUrl = "http://api.openweathermap.org/data/2.5/forecast?id=" + CityID + "&APPID=" + ApiKey + "&units=metric";
         }
         private async Task SetupWeatherData()
-        {
+        {       
                 var http = new HttpClient();
                 var response = await http.GetAsync(openWeatherRequestUrl);
                 var result = await response.Content.ReadAsStringAsync();
@@ -49,7 +48,8 @@ namespace Weather_Note.Models.POCO
                 var tempDate = date.Substring(0, 10);
                 if (jsonDate.Equals(tempDate))
                 {
-                    return maxTemp.main.temp_max.ToString() + "°";
+                    var roundedTemp = Math.Round(maxTemp.main.temp_max);
+                    return roundedTemp.ToString() + "°";
                 }
             }
             return "?";
