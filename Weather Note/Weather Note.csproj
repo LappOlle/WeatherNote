@@ -164,7 +164,7 @@
     <Compile Include="Models\Initializers\WheatherNoteInitializer.cs" />
     <Compile Include="Models\Interface\INote.cs" />
     <Compile Include="Models\POCO\Note.cs" />
-    <Compile Include="Models\POCO\OpenWeatherContainer.cs" />
+    <Compile Include="Models\POCO\OpenWeatherProxy.cs" />
     <Compile Include="Models\POCO\OpenWeatherService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -177,6 +177,7 @@
     <Content Include="Content\jquery-ui.min.css" />
     <Content Include="Content\jquery-ui.structure.min.css" />
     <Content Include="Content\jquery-ui.theme.min.css" />
+    <Content Include="Content\mystylesheet.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />

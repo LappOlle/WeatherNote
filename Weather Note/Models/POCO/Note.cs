@@ -16,8 +16,10 @@ namespace Weather_Note.Models.POCO
         //I only want my JQueryUi datepicker.
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}")]
         public DateTime Date { get; set; }
+
         public string Message { get; set; }
-        [NotMapped]
+
+        [NotMapped]//Data annotation for not mapping this propertie to the database with Entity Framework.
         public string MaxTemp { get; set; }
     }
 }
