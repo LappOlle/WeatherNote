@@ -22,13 +22,42 @@ namespace Weather_Note.Controllers
         private OpenWeatherService weather = new OpenWeatherService();
 
         // GET: Notes
-        public async Task<ActionResult> Index()
+        public async Task<ActionResult> Index(string sortOrder,string searchTerm)
         {
             foreach (var item in db.Notes)
             {
                 item.MaxTemp = await weather.GetMaxTemp(item.Date);
             }
-            return View(db.Notes.ToList());
+            ViewBag.SortMessage = !String.IsNullOrEmpty(sortOrder) ? "" : "message_desc";
+            ViewBag.SortDate = sortOrder == "date_desc" ? "Date" : "date_desc";
+
+            var notes = from n in db.Notes select n;
+
+            if (!String.IsNullOrEmpty(searchTerm))
+            {
+                notes = notes.Where(n => n.Message.Contains(searchTerm));
+            }
+
+            switch (sortOrder)
+            {
+                case "message_desc":
+                    {
+                        notes = notes.OrderByDescending(n => n.Message);
+                        break;
+                    }
+                case "date_desc":
+                    {
+                        notes = notes.OrderByDescending(n => n.Date);
+                        break;
+                    }
+                default:
+                    {
+                        notes = notes.OrderBy(n => n.Date);
+                        break;
+                    }
+            }
+
+            return View(notes.ToList());
         }
 
         // GET: Notes/Details/5
