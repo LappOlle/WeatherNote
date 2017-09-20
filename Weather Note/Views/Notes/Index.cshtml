@@ -5,19 +5,24 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
+<h1>Notes</h1>
 
-<p>
+<h3 class="create-link">
+    <!--Link for create a new note model.-->
     @Html.ActionLink("Create New", "Create")
-</p>
+</h3>
+<!--Form to post a search.-->
 @using (Html.BeginForm())
 {
-    <p>
+    <h2>
         Find By Message: @Html.TextBox("SearchTerm")
         <input type="submit" value="Search" />
-    </p>
+    </h2>
 }
-<table class="table">
+
+<!--All the table headers, It's 2 links as header and one normal header. It's so you can sort either by 
+    ascending or descending-->
+<table class="tangjaiTable">
     <tr>
         <th>
             @Html.ActionLink("Date","Index",new {sortOrder = ViewBag.SortDate })
@@ -30,6 +35,8 @@
         </th>
         <th></th>
     </tr>
+
+    <!--Foreach loop to print every table data to specific column.-->
 @foreach (var item in Model) {
     <tr>
         <td>
@@ -42,6 +49,7 @@
         @Html.DisplayFor(modelItem => item.MaxTemp)
         </td>
         <td>
+            <!--Links that you can press if you want to edit, see details or delete a model.-->
             @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
             @Html.ActionLink("Details", "Details", new { id=item.ID }) |
             @Html.ActionLink("Delete", "Delete", new { id=item.ID })

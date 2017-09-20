@@ -35,7 +35,8 @@ namespace Weather_Note
                       "~/Content/site.css",
                       "~/Content/jquery-ui.min.css",
                       "~/Content/jquery-ui.structure.min.css",
-                      "~/Content/jquery-ui.theme.min.css")); 
+                      "~/Content/jquery-ui.theme.min.css",
+                      "~/Content/mystylesheet.css")); //My stylesheet made with http://divtable.com/table-styler/
         }
     }
 }

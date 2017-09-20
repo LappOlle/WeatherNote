@@ -1,0 +1,127 @@
+﻿/*//My stylesheet made with http://divtable.com/table-styler/ */
+body {
+    background-color:darkgoldenrod;
+}
+
+p {
+    color: #060933;
+}
+
+h1 {
+    color: #060933;
+    font-size: 34px;
+    text-shadow: 4px 4px 2px rgba(117,68,17,0.86);
+}
+
+h2 {
+    font-size:28px;
+    background-color: darkgoldenrod;
+    color: #060933;
+    text-shadow: 4px 4px 2px rgba(117,68,17,0.86);
+}
+
+h3.create-link a {
+    font-size: 22px;
+    color: #060933;
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+h3.create-link a:hover {
+    font-size: 26px;
+    color: #280988;
+    text-align: center;
+    font-weight: bold;
+    text-decoration: underline;
+    transition: ease 0.2s;
+}
+
+table.tangjaiTable {
+    font-family: "Comic Sans MS", cursive, sans-serif;
+    border: 5px solid #F0B218;
+    background-color: #357819;
+    width: 100%;
+    text-align: center;
+    border-collapse: collapse;
+}
+
+table.tangjaiTable a {
+    font-size: 22px;
+    color: #060933;
+    text-align: center;
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+
+table.tangjaiTable a:hover {
+    font-size: 26px;
+    color: #280988;
+    text-align: center;
+    font-weight: bold;
+    text-decoration: underline;
+    transition:ease 0.2s;
+}
+
+table.tangjaiTable td, table.tangjaiTable th {
+    border: 4px solid #F0B218;
+    padding: 3px 2px;
+}
+
+table.tangjaiTable tbody td {
+    font-size: 16px;
+    font-weight: bold;
+    color: #060933;
+ }
+
+table.tangjaiTable tr:nth-child(even) {
+    background: #5DD42C;
+}
+
+table.tangjaiTable thead {
+    background: #784611;
+    background: -moz-linear-gradient(top, #9a744c 0%, #855828 66%, #784611 100%);
+    background: -webkit-linear-gradient(top, #9a744c 0%, #855828 66%, #784611 100%);
+    background: linear-gradient(to bottom, #9a744c 0%, #855828 66%, #784611 100%);
+    border-bottom: 3px solid #F0B218;
+}
+
+table.tangjaiTable th {
+    font-size: 22px;
+    font-weight: bold;
+    color: #060933;
+    text-align: center;
+    border-left: 5px solid #F0B218;
+    background-color: #784611;
+}
+
+table.tangjaiTable thead th:first-child {
+    border-left: none;
+}
+
+table.tangjaiTable tfoot {
+    font-size: 14px;
+    font-weight: bold;
+    color: #FFFFFF;
+    background: #F0B218;
+    background: -moz-linear-gradient(top, #f4c552 0%, #f1b92f 66%, #F0B218 100%);
+    background: -webkit-linear-gradient(top, #f4c552 0%, #f1b92f 66%, #F0B218 100%);
+    background: linear-gradient(to bottom, #f4c552 0%, #f1b92f 66%, #F0B218 100%);
+    border-top: 2px solid #444444;
+}
+
+table.tangjaiTable tfoot td {
+    font-size: 14px;
+}
+
+table.tangjaiTable tfoot .links {
+    text-align: right;
+}
+
+    table.tangjaiTable tfoot .links a {
+    display: inline-block;
+    background: #784611;
+    color: #FFFFFF;
+    padding: 2px 8px;
+    border-radius: 5px;
+}
