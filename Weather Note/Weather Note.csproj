@@ -92,6 +92,7 @@
       <HintPath>..\packages\System.Diagnostics.DiagnosticSource.4.4.1\lib\net46\System.Diagnostics.DiagnosticSource.dll</HintPath>
     </Reference>
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -163,6 +164,8 @@
     <Compile Include="Models\Initializers\WheatherNoteInitializer.cs" />
     <Compile Include="Models\Interface\INote.cs" />
     <Compile Include="Models\POCO\Note.cs" />
+    <Compile Include="Models\POCO\OpenWeatherContainer.cs" />
+    <Compile Include="Models\POCO\OpenWeatherService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

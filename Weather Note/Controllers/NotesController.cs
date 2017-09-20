@@ -2,8 +2,13 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
+using System.Runtime.Serialization.Json;
+using System.Text;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using Weather_Note.Models.Context;
@@ -13,12 +18,17 @@ namespace Weather_Note.Controllers
 {
     public class NotesController : Controller
     {
-        private NoteContext db = new NoteContext();//hello
+        private NoteContext db = new NoteContext();
+        private OpenWeatherService weather = new OpenWeatherService();
 
         // GET: Notes
-        public ActionResult Index()//test 3
+        public async Task<ActionResult> Index()
         {
-            return View(db.Notes.ToList());//test 2
+            foreach (var item in db.Notes)
+            {
+                item.MaxTemp = await weather.GetMaxTemp(item.Date);
+            }
+            return View(db.Notes.ToList());
         }
 
         // GET: Notes/Details/5
