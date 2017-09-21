@@ -8,6 +8,7 @@ using System.Net;
 using System.Net.Http;
 using System.Runtime.Serialization.Json;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -46,11 +47,25 @@ namespace Weather_Note.Controllers
             /*Load all the notes from database to an IQuerable collection
              * so we can do querys and return a temporary list to the view.*/
             var notes = from n in db.Notes select n;
-
+            var notesToSend = new List<Note>();
             //If the searchTerm isn't null we search for message containing that text.
             if (!String.IsNullOrEmpty(searchTerm))
             {
-                notes = notes.Where(n => n.Message.Contains(searchTerm));
+                var arrayWithSearchWords = new string[Regex.Split(searchTerm, "[^a-zA-Z0-9]").Length];
+                arrayWithSearchWords = Regex.Split(searchTerm.ToLower(), "[^a-zA-Z0-9]");
+
+                foreach (var item in notes)
+                {
+                    var allWordsInMessage = new string[Regex.Split(item.Message,"[^a-zA-Z0-9]").Length];
+                    allWordsInMessage = Regex.Split(item.Message.ToLower(), "[^a-zA-Z0-9]");
+
+                    var both = allWordsInMessage.Intersect(arrayWithSearchWords) ;
+                    if (both.Count() == arrayWithSearchWords.Length)
+                    {
+                        notesToSend.Add(item);
+                    }
+                }
+                notes = notesToSend.AsQueryable();
             }
 
             /*Switching the choosen sortOrder and sort the temporary list by the case result
