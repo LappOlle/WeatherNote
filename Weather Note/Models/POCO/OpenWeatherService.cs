@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
@@ -58,18 +59,28 @@ namespace Weather_Note.Models.POCO
 
             /*Iterate through every day in the json data, 
             and then return the max_temp with a item with same date as the passed DateTime Object.*/
+            double highestMaxTemp = 0.0;
             foreach (var item in root.list)
             {
                 var jsonDate = item.dt_txt.Substring(0, 10);
                 var passedModelDate = date.Substring(0, 10);
                 if (jsonDate.Equals(passedModelDate))
                 {
-                    //I round the temp_max to closest integer. it's a 2 decimal data before i round it
-                    var maxTemp = Math.Round(item.main.temp_max); 
-                    return maxTemp.ToString() + "°";
+                    //Looking what the highest maxtemp is. it's 8 maxtemp for everyday.
+                    if (highestMaxTemp < item.main.temp_max) { highestMaxTemp = item.main.temp_max; }
                 }
             }
-            return "?"; //If there is no data for the passed DateTime object it returns "?".
+            if(highestMaxTemp != 0)
+            {
+                //I round the temp_max to closest integer. it's a 2 decimal data before i round it.
+                var maxTemp = Math.Round(highestMaxTemp);
+                highestMaxTemp = 0;
+                return maxTemp.ToString() + "°";
+            }
+           else
+            {
+                return "?"; //If there is no data for the passed DateTime object it returns "?".
+            }
         }
     }
 }
