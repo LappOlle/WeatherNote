@@ -5,27 +5,27 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Notes</h1>
+<h1>Notes Overview</h1>
 
-<h3 class="create-link">
+<div class="link-style">
     <!--Link for create a new note model.-->
     @Html.ActionLink("Create New", "Create")
-</h3>
+</div>
 <!--Form to post a search.-->
 @using (Html.BeginForm())
 {
-    <h2>
+    <div class="div-input-style">
         Find By Message: @Html.TextBox("SearchTerm")
-        <input type="submit" value="Search" />
-    </h2>
+        <input class="button-style" type="submit" value="Search" />
+    </div>
 }
 
-<!--All the table headers, It's 2 links as header and one normal header. It's so you can sort either by 
+<!--All the table headers, It's 2 links as header and one normal header. It's so you can sort either by
     ascending or descending-->
 <table class="tangjaiTable">
     <tr>
         <th>
-            @Html.ActionLink("Date","Index",new {sortOrder = ViewBag.SortDate })
+            @Html.ActionLink("Date", "Index", new { sortOrder = ViewBag.SortDate })
         </th>
         <th>
             @Html.ActionLink("Message", "Index", new { sortOrder = ViewBag.SortMessage })
@@ -37,24 +37,26 @@
     </tr>
 
     <!--Foreach loop to print every table data to specific column.-->
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Date)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Message)
-        </td>
-        <td>
-        @Html.DisplayFor(modelItem => item.MaxTemp)
-        </td>
-        <td>
-            <!--Links that you can press if you want to edit, see details or delete a model.-->
-            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Date)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Message)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MaxTemp)
+            </td>
+            <td>
+                <!--Links that you can press if you want to edit, see details or delete a model.-->
+                <div class="link-style">
+                    @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.ID }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+                </div>
+            </td>
+        </tr>
+    }
 </table>
-

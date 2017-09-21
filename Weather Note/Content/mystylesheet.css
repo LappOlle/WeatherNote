@@ -20,20 +20,49 @@ h2 {
     text-shadow: 4px 4px 2px rgba(117,68,17,0.86);
 }
 
-h3.create-link a {
+.div-input-style {
+    line-height:30px;
+    font-size: 28px;
+    font-weight:unset;
+    background-color: darkgoldenrod;
+    color: #060933;
+    text-shadow: 4px 4px 2px rgba(117,68,17,0.86);
+    margin-bottom:10px;
+}
+
+.link-style {
+    margin-top:10px;
+    margin-bottom:10px;
+}
+
+div.link-style a {
     font-size: 22px;
     color: #060933;
     font-weight: bold;
     text-decoration: underline;
 }
 
-h3.create-link a:hover {
-    font-size: 26px;
+div.link-style a:hover {
+    font-size: 23px;
     color: #280988;
     text-align: center;
     font-weight: bold;
     text-decoration: underline;
     transition: ease 0.2s;
+}
+
+.button-style {
+    border-radius: 8px;
+    background-color: #784611;
+    color: #060933;
+    border-color: #F0B218;
+}
+
+.button-style:hover {
+    border-radius: 8px;
+    background-color: #340200;
+    color: #494977;
+    border-color: #F0B218;
 }
 
 table.tangjaiTable {
@@ -55,7 +84,7 @@ table.tangjaiTable a {
 
 
 table.tangjaiTable a:hover {
-    font-size: 26px;
+    font-size: 23px;
     color: #280988;
     text-align: center;
     font-weight: bold;
