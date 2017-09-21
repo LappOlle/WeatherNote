@@ -165,7 +165,7 @@
     <Compile Include="Models\Interface\INote.cs" />
     <Compile Include="Models\POCO\Note.cs" />
     <Compile Include="Models\POCO\OpenWeatherProxy.cs" />
-    <Compile Include="Models\POCO\OpenWeatherService.cs" />
+    <Compile Include="Models\Services\OpenWeatherService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

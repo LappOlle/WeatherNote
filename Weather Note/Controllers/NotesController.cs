@@ -31,9 +31,9 @@ namespace Weather_Note.Controllers
         /// </summary>
         /// <param name="sortOrder">send what you want to sort by, "SortMessage" or "SortDate".
         /// It will toggle between Descending and Ascending if you press link.</param>
-        /// <param name="searchTerm">Send the Message that you want to search for.</param>
+        /// <param name="searchString">Send the Message that you want to search for.</param>
         /// <returns>Returns a view with the choosen data.</returns>
-        public async Task<ActionResult> Index(string sortOrder,string searchTerm)
+        public async Task<ActionResult> Index(string sortOrder,string searchString)
         {
             foreach (var item in db.Notes)//For every item in Notes we Gets and set the max temp for that day.
             {
@@ -48,15 +48,15 @@ namespace Weather_Note.Controllers
              * so we can do querys and return a temporary list to the view.*/
             var notes = from n in db.Notes select n;
             var notesToSend = new List<Note>();
-            //If the searchTerm isn't null we search for message containing that text.
-            if (!String.IsNullOrEmpty(searchTerm))
+            //If the searchString isn't null we search for message containing that text.
+            if (!String.IsNullOrEmpty(searchString))
             {
-                var arrayWithSearchWords = new string[Regex.Split(searchTerm, "[^a-zA-Z0-9]").Length];
-                arrayWithSearchWords = Regex.Split(searchTerm.ToLower(), "[^a-zA-Z0-9]");
+                var arrayWithSearchWords = new string[Regex.Split(searchString, "[^a-zA-Z0-9]").Length];
+                arrayWithSearchWords = Regex.Split(searchString.ToLower(), "[^a-zA-Z0-9]");
 
                 foreach (var item in notes)
                 {
-                    var allWordsInMessage = new string[Regex.Split(item.Message,"[^a-zA-Z0-9]").Length];
+                    var allWordsInMessage = new string[Regex.Split(item.Message, "[^a-zA-Z0-9]").Length];
                     allWordsInMessage = Regex.Split(item.Message.ToLower(), "[^a-zA-Z0-9]");
 
                     var both = allWordsInMessage.Intersect(arrayWithSearchWords) ;
