@@ -62,8 +62,8 @@ namespace Weather_Note.Models.POCO
             double highestMaxTemp = 0.0;
             foreach (var item in root.list)
             {
-                var jsonDate = item.dt_txt.Substring(0, 10);
-                var passedModelDate = date.Substring(0, 10);
+                var jsonDate = item.dt_txt.Substring(0, 10);//cut away the time from it.
+                var passedModelDate = date.Substring(0, 10);//-||-
                 if (jsonDate.Equals(passedModelDate))
                 {
                     //Looking what the highest maxtemp is. it's 8 maxtemp for everyday.
@@ -77,8 +77,7 @@ namespace Weather_Note.Models.POCO
             {
                 //I round the temp_max to closest integer. it's a 2 decimal data before i round it.
                 var maxTemp = Math.Round(highestMaxTemp);
-                highestMaxTemp = 0;
-                return maxTemp.ToString() + "°";
+                return maxTemp.ToString() + "° (" + highestMaxTemp + "°)";
             }
            else
             {

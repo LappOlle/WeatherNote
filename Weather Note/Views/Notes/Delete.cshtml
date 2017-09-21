@@ -29,10 +29,10 @@
 
     </dl>
 
-    @using (Html.BeginForm()) {
+    @using (Html.BeginForm())
+    {
         @Html.AntiForgeryToken()
-
-        <div class="form-actions no-color">
+        <div id="deleteForm" class="form-actions no-color">
             <input type="submit" value="Delete" class="button-style" /> |
             <div class="link-style">
                 @Html.ActionLink("Back to List", "Index")

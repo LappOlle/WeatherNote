@@ -84,6 +84,7 @@ namespace Weather_Note.Controllers
 
             /*Switching the choosen sortOrder and sort the temporary list by the case result
              * and then return it to the view.*/
+
             switch (sortOrder)
             {
                 case "Message_Ascending":
@@ -227,6 +228,12 @@ namespace Weather_Note.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Note note = db.Notes.Find(id);
+            if(note == null)
+            {
+                /*I made this null check because if someone doubleclick very fast on deletebutton it runs
+                 * twice and then the model is already deleted .*/
+                return RedirectToAction("Index");
+            }
             db.Notes.Remove(note);
             db.SaveChanges();
             return RedirectToAction("Index");
