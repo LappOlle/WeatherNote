@@ -58,7 +58,7 @@ namespace Weather_Note.Models.POCO
             }
 
             /*Iterate through every day in the json data, 
-            and then return the max_temp with a item with same date as the passed DateTime Object.*/
+            and then return the max_temp from the item with same date as the passed DateTime Object.*/
             double highestMaxTemp = 0.0;
             foreach (var item in root.list)
             {
@@ -67,7 +67,10 @@ namespace Weather_Note.Models.POCO
                 if (jsonDate.Equals(passedModelDate))
                 {
                     //Looking what the highest maxtemp is. it's 8 maxtemp for everyday.
-                    if (highestMaxTemp < item.main.temp_max) { highestMaxTemp = item.main.temp_max; }
+                    if (highestMaxTemp < item.main.temp_max)
+                    {
+                        highestMaxTemp = item.main.temp_max;
+                    }
                 }
             }
             if(highestMaxTemp != 0)
