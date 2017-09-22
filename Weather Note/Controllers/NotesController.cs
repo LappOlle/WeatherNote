@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using Weather_Note.Models.Context;
+using Weather_Note.Models.Filter;
 using Weather_Note.Models.POCO;
 
 namespace Weather_Note.Controllers
@@ -149,6 +150,7 @@ namespace Weather_Note.Controllers
         /// Create view.</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [PreventDuplicateRequest]
         public ActionResult Create([Bind(Include = "ID,Date,Message")] Note note)
         {
             if (ModelState.IsValid)
@@ -194,6 +196,7 @@ namespace Weather_Note.Controllers
             {
                 db.Entry(note).State = EntityState.Modified;
                 db.SaveChanges();
+                
                 return RedirectToAction("Index");
             }
             return View(note);

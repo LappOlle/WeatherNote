@@ -161,6 +161,7 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Context\NoteContext.cs" />
+    <Compile Include="Models\Filter\PreventDuplicateRequestAttribute.cs" />
     <Compile Include="Models\Initializers\WheatherNoteInitializer.cs" />
     <Compile Include="Models\Interface\INote.cs" />
     <Compile Include="Models\POCO\Note.cs" />
