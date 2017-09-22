@@ -8,71 +8,108 @@ using System.Net;
 using System.Net.Http;
 using System.Runtime.Serialization.Json;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using Weather_Note.Models.Context;
+using Weather_Note.Models.Filter;
 using Weather_Note.Models.POCO;
 
 namespace Weather_Note.Controllers
 {
     public class NotesController : Controller
     {
+        #region Fields
         //DB Context, It's with this you to all the CRUD operation to the database.
         private NoteContext db = new NoteContext();
 
         /*My OpenWeatherService. You can send an other cityID or apiKey then the default.
          By default it's choosen Örnsköldsvik in sweden ="2686469"*/
         private OpenWeatherService weather = new OpenWeatherService();
+        #endregion
 
         /// <summary>
         /// ActionResult for the index view.
         /// </summary>
         /// <param name="sortOrder">send what you want to sort by, "SortMessage" or "SortDate".
         /// It will toggle between Descending and Ascending if you press link.</param>
-        /// <param name="searchTerm">Send the Message that you want to search for.</param>
+        /// <param name="searchString">Send the Message that you want to search for.</param>
         /// <returns>Returns a view with the choosen data.</returns>
-        public async Task<ActionResult> Index(string sortOrder,string searchTerm)
+        public async Task<ActionResult> Index(string sortOrder, string searchString)
         {
-            foreach (var item in db.Notes)//For every item in Notes we Gets and set the max temp for that day.
+            /*Load all the notes from database to an IQuerable collection
+            * so we can do querys and return a temporary list to the view.*/
+            var notes = from n in db.Notes select n;
+            var notesToSend = new List<Note>();
+
+            #region GetMaxTemps
+            foreach (var item in notes)//For every item in Notes we Gets and set the max temp for that day.
             {
                 item.MaxTemp = await weather.GetMaxTemp(item.Date);
             }
-            //Toggle message sort by descending and ascending.
-            ViewBag.SortMessage = !String.IsNullOrEmpty(sortOrder) ? "" : "message_desc";
-            //Toggle date sort by descending and ascending.
-            ViewBag.SortDate = sortOrder == "date_desc" ? "Date" : "date_desc";
+            #endregion
 
-            /*Load all the notes from database to an IQuerable collection
-             * so we can do querys and return a temporary list to the view.*/
-            var notes = from n in db.Notes select n;
-
-            //If the searchTerm isn't null we search for message containing that text.
-            if (!String.IsNullOrEmpty(searchTerm))
+            #region SearchNotes
+            //If the searchString isn't null we search for message containing that text.
+            if (!String.IsNullOrEmpty(searchString))
             {
-                notes = notes.Where(n => n.Message.Contains(searchTerm));
+                var arrayWithSearchWords = new string[Regex.Split(searchString, "[^a-zA-Z0-9]").Length];
+                arrayWithSearchWords = Regex.Split(searchString.ToLower(), "[^a-zA-Z0-9]");
+
+                foreach (var item in notes)
+                {
+                    var allWordsInMessage = new string[Regex.Split(item.Message, "[^a-zA-Z0-9]").Length];
+                    allWordsInMessage = Regex.Split(item.Message.ToLower(), "[^a-zA-Z0-9]");
+
+                    /*Using an Linq method "Intersect" with which you can compare 2 arrays. 
+                     * the new array will consist of the words that they have common. And 
+                     then i check if the length is the same as the array with SearchWords. 
+                     If it's true we have find a message with the same words as we have searched
+                     for in the view.*/
+                    var both = allWordsInMessage.Intersect(arrayWithSearchWords);
+                    if (both.Count() == arrayWithSearchWords.Length)
+                    {
+                        notesToSend.Add(item);
+                    }
+                }
+                notes = notesToSend.AsQueryable();
             }
+            #endregion
+
+            #region SortNotes
+            //Toggle message sort by descending and ascending.
+            ViewBag.SortMessage = sortOrder == "Message_Descending" ? "Message_Ascending" : "Message_Descending";
+            //Toggle date sort by descending and ascending.
+            ViewBag.SortDate = sortOrder == "Date_Descending" ? "Date_Ascending" : "Date_Descending";
 
             /*Switching the choosen sortOrder and sort the temporary list by the case result
              * and then return it to the view.*/
+
             switch (sortOrder)
             {
-                case "message_desc":
+                case "Message_Ascending":
+                    {
+                        notes = notes.OrderBy(n => n.Message);
+                        break;
+                    }
+                case "Message_Descending":
                     {
                         notes = notes.OrderByDescending(n => n.Message);
                         break;
                     }
-                case "date_desc":
+                case "Date_Descending":
                     {
                         notes = notes.OrderByDescending(n => n.Date);
                         break;
                     }
                 default:
                     {
-                        notes = notes.OrderBy(n => n.Date);
+                        notes = notes.OrderBy(n => n.Date); //order by date ascending default.
                         break;
                     }
             }
+            #endregion
 
             return View(notes.ToList());
         }
@@ -105,14 +142,15 @@ namespace Weather_Note.Controllers
             return View();
         }
 
-       /// <summary>
-       /// ActionResult for save the model(post) and redirect to the Index View.
-       /// </summary>
-       /// <param name="note">The model that you want to save.</param>
-       /// <returns>Redirect to Index view if everything went fine, else it displays what's missing in the 
-       /// Create view.</returns>
+        /// <summary>
+        /// ActionResult for save the model(post) and redirect to the Index View.
+        /// </summary>
+        /// <param name="note">The model that you want to save.</param>
+        /// <returns>Redirect to Index view if everything went fine, else it displays what's missing in the 
+        /// Create view.</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [PreventDuplicateRequest]
         public ActionResult Create([Bind(Include = "ID,Date,Message")] Note note)
         {
             if (ModelState.IsValid)
@@ -158,6 +196,7 @@ namespace Weather_Note.Controllers
             {
                 db.Entry(note).State = EntityState.Modified;
                 db.SaveChanges();
+                
                 return RedirectToAction("Index");
             }
             return View(note);
@@ -192,6 +231,12 @@ namespace Weather_Note.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Note note = db.Notes.Find(id);
+            if(note == null)
+            {
+                /*I made this null check because if someone doubleclick very fast on deletebutton it runs
+                 * twice and then the model is already deleted .*/
+                return RedirectToAction("Index");
+            }
             db.Notes.Remove(note);
             db.SaveChanges();
             return RedirectToAction("Index");

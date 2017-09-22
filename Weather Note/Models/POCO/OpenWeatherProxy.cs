@@ -7,9 +7,9 @@ using System.Web;
 namespace Weather_Note.Models.POCO
 {
     /*A big container with all the classes to parse the Json response data.
-     It's the RootObject class the we put the Jsondata into and then all the data get's to
+     It's the RootObject class we put the Jsondata into and then all the data get's to
      every class that represent the specific data. I had to put "DataContract" above every class and 
-     "DataMember above every propertie."*/
+     "DataMember above every propertie to use "DataContractJsonSerializer" when i deserialize the json data.*/
     public class OpenWeatherProxy
     {
         [DataContract]

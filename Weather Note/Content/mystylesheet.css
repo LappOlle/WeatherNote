@@ -1,4 +1,5 @@
-﻿/*//My stylesheet made with http://divtable.com/table-styler/ */
+﻿/*//My stylesheet, everything with "table.tangjaiTable" is made with http://divtable.com/table-styler/ 
+    The rest is written by hand.*/
 body {
     background-color:darkgoldenrod;
 }
@@ -28,6 +29,10 @@ h2 {
     color: #060933;
     text-shadow: 4px 4px 2px rgba(117,68,17,0.86);
     margin-bottom:10px;
+}
+
+.div-input-style p,dt {
+    font-weight: unset;
 }
 
 .link-style {
@@ -147,7 +152,7 @@ table.tangjaiTable tfoot .links {
     text-align: right;
 }
 
-    table.tangjaiTable tfoot .links a {
+table.tangjaiTable tfoot .links a {
     display: inline-block;
     background: #784611;
     color: #FFFFFF;
